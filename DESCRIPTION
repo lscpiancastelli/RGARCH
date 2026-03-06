@@ -1,0 +1,13 @@
+Package: RGARCH
+Title: Modelling time series of rankings 
+Version: 0.0.0.9000
+Authors@R: 
+    person("Luiza", "Piancatelli", , "luiza.piancastelli@ucd.ie", role = c("aut", "cre"))
+Description: Implementation of the Ranking GARCH model by Piancastelli and Barreto-Souza which is based on the Mallows model.
+License: MIT
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
+Imports:
+    Rankcluster,
+    BayesMallows
