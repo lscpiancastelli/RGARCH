@@ -1,9 +1,6 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-    #> Warning: package 'BayesMallows' was built under R version 4.3.3
-    #> Warning: package 'ggplot2' was built under R version 4.3.3
-
 `rGARCH` is an R package implementing the Ranking-GARCH model of
 Piancastelli and Barreto-Souza. This example demonstrates RGARCH
 simulation, fitting and selection.

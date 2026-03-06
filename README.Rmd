@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
 
 ```
 
-```{r, echo = FALSE, message=FALSE}
+```{r, echo = FALSE, message=FALSE, warning=FALSE}
 library(RGARCH)
 library(BayesMallows)
 library(reshape2)
@@ -41,7 +41,7 @@ remotes::install_github("lscpiancastelli/RGARCH")
 
 ##1. Simulate Ranking Data
 
-```{r}
+```{r, cache =TRUE}
 N = 100   # Number of time points
 n = 10    # Number of items
 phi0 = 0.7
@@ -56,7 +56,7 @@ N = total time points, n = number of items.
 
 Let's visualise the simulated data by creating an orderings data frame. This data frame will contain rank of each item per time point, which we can then plot using ggplot2.
 
-```{r}
+```{r, cache =TRUE}
 orderings_df = data.frame(create_ordering(sim$data))
 orderings_df$t = 1:N
 orderings_df = melt(orderings_df, id.vars = 't')
@@ -74,7 +74,7 @@ ggplot(orderings_df, aes(x = t, y = value)) +
 The function `lagonedist` calculates the Kendall distance between consecutive rankings. The autocorrelation function (ACF) and partial autocorrelation function (PACF) of this trajectory can give us an idea of R-GARCH orders.
 
 
-```{r}
+```{r, cache =TRUE}
 dists = lagonedist(sim$data)
 acf(dists)
 pacf(dists)
@@ -84,7 +84,7 @@ pacf(dists)
 
 We can fit RGARCH models of different orders using the `fit_RGARCH` function. This function takes the data and the desired orders as input and returns a fitted model object. In this example, we will perform model selection using a sequential forward Likelihood Ratio Test (LRT) approach, starting from the simplest model and adding parameters until no significant improvement is observed.
 
-```{r}
+```{r, cache =TRUE}
 # Fit RGARCH(0,0)
 fit0 = fitRGARCH(sim$data, p=0, q=0)
 fit0$value
@@ -93,7 +93,7 @@ fit0$value
 
 In the first iteration, we consider the candidates (1,0) and (0,1). We fit both models and perform LRT to compare them with the null model (0,0).
 
-```{r}
+```{r, cache =TRUE}
 fit1_0 = fitRGARCH(sim$data, p=1, q=0)
 fit0_1 = fitRGARCH(sim$data, p=0, q=1)
 
@@ -110,7 +110,7 @@ c(LRT1_0, LRT0_1) #Add p
 
 The fit with highest LRT statistic is selected for the next iteration, provided its p-value is below the significance threshold (e.g., 0.05). In this example, we choose (1,0).
 
-```{r}
+```{r, cache =TRUE}
 fit1_1 = fitRGARCH(sim$data, p=1, q=1)
 
 fit2_0 = fitRGARCH(sim$data, p=2, q=0)
@@ -131,7 +131,7 @@ The second iteration compares the orders (1,1) and (2,0) to (1,0). The selection
 
 We can then plot the fitted mean trajectory from the selected model against the true mean trajectory used in the simulation. This allows us to visually assess how well the model captures the underlying dynamics of the data.
 
-```{r}
+```{r,cache =TRUE}
 #Plot fitted mean trajectory
 mu = fittedRGARCH(fit1_0)
 
@@ -150,7 +150,7 @@ ggplot(filter(df, t>3), aes(x = t)) +
 
 The parameter estimates are also close to the true values used in the simulation, as expected. Confidence bands can be obtained using the Hessian matrix from the optimization output, as given below.
 
-```{r}
+```{r, cache =TRUE}
 fit1_0$par
 
 ses = sqrt(-diag(solve(fit1_0$hessian)))
