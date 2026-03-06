@@ -1,23 +1,8 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-``` r
-library(RGARCH)
-library(BayesMallows)
-#> Warning: package 'BayesMallows' was built under R version 4.3.3
-library(reshape2)
-library(ggplot2)
-#> Warning: package 'ggplot2' was built under R version 4.3.3
-library(dplyr)
-#> 
-#> Attaching package: 'dplyr'
-#> The following objects are masked from 'package:stats':
-#> 
-#>     filter, lag
-#> The following objects are masked from 'package:base':
-#> 
-#>     intersect, setdiff, setequal, union
-```
+    #> Warning: package 'BayesMallows' was built under R version 4.3.3
+    #> Warning: package 'ggplot2' was built under R version 4.3.3
 
 `rGARCH` is an R package implementing the Ranking-GARCH model of
 Piancastelli and Barreto-Souza. This example demonstrates RGARCH
